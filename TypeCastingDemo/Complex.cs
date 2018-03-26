@@ -1,4 +1,6 @@
-﻿using System;
+﻿// https://github.com/Const-Phi/TypeCastingDemo
+
+using System;
 using static TypeCastingDemo.Staff;
 
 namespace TypeCastingDemo
@@ -30,40 +32,47 @@ namespace TypeCastingDemo
             imaginary = im;
         }
 
+        /// <summary>
+        /// Конструктор копирования.
+        /// </summary>
+        /// <param name="arg">Копируемый объект.</param>
         public Complex(Complex arg)
         {
             real = arg.real;
             imaginary = arg.imaginary;
         }
 
-        public double Modulo => 
-            Math.Sqrt(real * real + imaginary * imaginary);
+        public override string ToString() => $"<{real}; {imaginary}>";
 
-        public override string ToString() => 
-            $"<{real}; {imaginary}>";
+        /// <summary>
+        /// Модуль (абсолютное значение) комплексного числа.
+        /// </summary>
+        public double Modulo => Math.Sqrt(real * real + imaginary * imaginary);
 
-        // неявное приведение типов
-        public static implicit operator Complex(double value) => 
-            new Complex(value);
+        /// <summary>
+        /// Неявное приведение типа <see cref="double"/> к типу <see cref="Complex"/>.
+        /// </summary>
+        /// <param name="value">Объект, приводимый к типу <see cref="Complex"/>.</param>
+        public static implicit operator Complex(double value) => new Complex(value);
 
-        // явное приведение типов
-        public static explicit operator double(Complex value) => 
-            value.real;
+        /// <summary>
+        /// Явное приведение типа <see cref="Complex"/> к типу <see cref="double"/>.
+        /// </summary>
+        /// <param name="value">Объект, приводимый к типу <see cref="double"/>.</param>
+        public static explicit operator double(Complex value) => value.real;
 
         public static bool operator ==(Complex lha, Complex rha)
         {
-            if (ReferenceEquals(lha, rha))
+            if (ReferenceEquals(lha, rha)) 
                 return true;
 
             if (ReferenceEquals(lha, null) || ReferenceEquals(rha, null))
                 return false;
 
-            return IsNear(lha.real, rha.real) 
-                   && IsNear(lha.imaginary, rha.imaginary);
+            return IsNear(lha.real, rha.real) && IsNear(lha.imaginary, rha.imaginary);
         }
 
-        public static bool operator !=(Complex lha, Complex rha) => 
-            !(lha == rha);
+        public static bool operator !=(Complex lha, Complex rha) => !(lha == rha);
 
         public bool Equals(Complex other)
         {
