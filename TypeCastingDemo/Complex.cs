@@ -3,6 +3,10 @@ using static TypeCastingDemo.Staff;
 
 namespace TypeCastingDemo
 {
+    /// <summary>
+    /// Комплексное число
+    /// </summary>
+    /// <inheritdoc/>
     public sealed class Complex : IEquatable<Complex>
     {
         /// <summary>
@@ -74,6 +78,15 @@ namespace TypeCastingDemo
             if (ReferenceEquals(this, obj)) return true;
             return Equals(obj as Complex);
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (real.GetHashCode() * 397) ^ imaginary.GetHashCode();
+            }
+        }
+
 
         public static bool operator >=(Complex lha, Complex rha) => 
             lha.Modulo >= rha.Modulo;
